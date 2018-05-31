@@ -3,4 +3,7 @@
     <string name="play">play</string>
     <string name="skip_next">skip_next</string>
     <string name="skip_previous">skip_previous</string>
+    <string name="group_album">Albums</string>
+    <string name="group_songs">Songs</string>
+    <string name="group_artists">Artists</string>
 </resources>
