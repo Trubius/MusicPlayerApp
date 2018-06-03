@@ -1,10 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.example.android.musicplayerapp.SquareImageView
         android:id="@+id/image"
-        android:layout_width="88dp"
-        android:layout_height="88dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/album_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#55000000"
+        android:paddingEnd="@dimen/album_text_padding"
+        android:paddingStart="@dimen/album_text_padding"
+        android:paddingTop="@dimen/album_text_padding"
+        android:text="Album name"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/album_text_size"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/artist_name"
+        app:layout_constraintEnd_toEndOf="@id/image"
+        app:layout_constraintStart_toStartOf="@id/image" />
+
+    <TextView
+        android:id="@+id/artist_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#55000000"
+        android:paddingBottom="@dimen/album_text_padding"
+        android:paddingEnd="@dimen/album_text_padding"
+        android:paddingStart="@dimen/album_text_padding"
+        android:text="Artist name"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/artist_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/image"
+        app:layout_constraintEnd_toEndOf="@id/image"
+        app:layout_constraintStart_toStartOf="@id/image" />
 </android.support.constraint.ConstraintLayout>
