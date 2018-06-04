@@ -11,4 +11,16 @@ public class Track {
         mSongName = songName;
         mAudioResourceId = audioResourceId;
     }
+
+    public String getArtist() {
+        return mArtist;
+    }
+
+    public String getSongName() {
+        return mSongName;
+    }
+
+    public int getAudioResourceId() {
+        return mAudioResourceId;
+    }
 }

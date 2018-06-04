@@ -12,4 +12,11 @@ public class Album extends ArrayList<Track> {
         mAlbumCoverId = coverId;
     }
 
+    public String getAlbumName() {
+        return mAlbumName;
+    }
+
+    public int getAlbumCoverId() {
+        return mAlbumCoverId;
+    }
 }

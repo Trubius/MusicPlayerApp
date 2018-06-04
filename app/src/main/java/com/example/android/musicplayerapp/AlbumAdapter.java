@@ -6,58 +6,57 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class AlbumAdapter extends BaseAdapter {
-    private Context mContext;
-    private LayoutInflater layoutInflator;
+    private final LayoutInflater mInflater;
+    private final ArrayList<Album> mAlbums= new ArrayList<Album>();
 
-    // references to our images
-    private Integer[] mThumbIds = {
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7
-    };
-
-    public AlbumAdapter(Context c) {
-        mContext = c;
-        layoutInflator = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public AlbumAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
+        mAlbums.add(new Album("Sample0", R.drawable.sample_0));
+        mAlbums.add(new Album("Sample1", R.drawable.sample_1));
+        mAlbums.add(new Album("Sample2", R.drawable.sample_2));
+        mAlbums.add(new Album("Sample3", R.drawable.sample_3));
+        mAlbums.add(new Album("Sample4", R.drawable.sample_4));
+        mAlbums.add(new Album("Sample5", R.drawable.sample_5));
+        mAlbums.add(new Album("Sample6", R.drawable.sample_6));
+        mAlbums.add(new Album("Sample7", R.drawable.sample_7));
     }
 
     public int getCount() {
-        return mThumbIds.length;
+        return mAlbums.size();
     }
 
-    public Object getItem(int position) {
-        return null;
+    public Album getItem(int position) {
+        return mAlbums.get(position);
     }
 
     public long getItemId(int position) {
-        return 0;
+        return mAlbums.get(position).getAlbumCoverId();
     }
 
-    // create a new ImageView for each item referenced by the Adapter
-    public View getView(int position, View grid, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View view = convertView;
         ImageView imageView;
-        if (grid == null) {
-            grid = layoutInflator.inflate(R.layout.list_album, null);
-            imageView =  (ImageView) grid.findViewById(R.id.image);
+        TextView textView;
 
-        } else {
-            imageView = (ImageView) grid;
+        if (view == null) {
+            view = mInflater.inflate(R.layout.list_album, parent,false);
+            view.setTag(R.id.image, view.findViewById(R.id.image));
+            view.setTag(R.id.album_name, view.findViewById(R.id.album_name));
         }
 
-        imageView.setImageResource(mThumbIds[position]);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView = (ImageView) view.getTag(R.id.image);
+        textView = (TextView) view.getTag(R.id.album_name);
 
-        return imageView;
+        Album album = getItem(position);
+
+        imageView.setImageResource(album.getAlbumCoverId());
+        textView.setText(album.getAlbumName());
+        return view;
     }
 
 }
