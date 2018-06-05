@@ -6,6 +6,7 @@ public class Artist {
 
     private static ArrayList<Artist> mArtists = new ArrayList<>();
     private String mArtistName;
+    private ArrayList<Album> mAlbums = new ArrayList<>();
 
     public static Artist getOrCreateArtist(String artistName) {
         if (hasArtist(artistName)) {
@@ -13,6 +14,7 @@ public class Artist {
         } else {
             return new Artist(artistName);
         }
+        //return hasArtist(artistName)?getArtistByName(artistName):new Artist(artistName);
     }
 
     private Artist(String artistName) {
@@ -21,7 +23,7 @@ public class Artist {
     }
 
 
-    public static Artist getArtistByName(String artistName) {
+    private static Artist getArtistByName(String artistName) {
         for (int i = 0; i < mArtists.size(); i++) {
             if (mArtists.get(i).getArtistName() == artistName) {
                 return mArtists.get(i);
@@ -30,7 +32,7 @@ public class Artist {
         return null;
     }
 
-    public static boolean hasArtist(String artistName) {
+    private static boolean hasArtist(String artistName) {
         for (int i = 0; i < mArtists.size(); i++) {
             if (mArtists.get(i).getArtistName() == artistName) {
                 return true;
@@ -43,7 +45,23 @@ public class Artist {
         return mArtists;
     }
 
+    public void addAlbum(Album album){
+        mAlbums.add(album);
+    }
+
     public String getArtistName() {
         return mArtistName;
+    }
+
+    public int getAlbumCount(){
+        return mAlbums.size();
+    }
+
+    public int getTrackCount(){
+        int totalTrackCount = 0;
+        for (int i = 0; i < mAlbums.size(); i++){
+            totalTrackCount = totalTrackCount + mAlbums.get(i).getTrackCount();
+        }
+        return totalTrackCount;
     }
 }

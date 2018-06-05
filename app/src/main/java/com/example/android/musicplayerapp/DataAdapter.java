@@ -8,21 +8,36 @@ import java.util.ArrayList;
 
 public abstract class DataAdapter extends BaseAdapter {
     protected final LayoutInflater mInflater;
-    protected final ArrayList<Album> mAlbums = new ArrayList<>();
-    protected final ArrayList<Artist> mArtists = Artist.getArtists();
+    protected final static ArrayList<Album> mAlbums = new ArrayList<>();
+    protected final static ArrayList<Artist> mArtists = Artist.getArtists();
 
     DataAdapter(Context context){
         mInflater = LayoutInflater.from(context);
-        mAlbums.add(new Album("Abba","Sample0", R.drawable.sample_0));
-        /*album.add(new Track("Mammamia"));
-        mAlbums.add(album);*/
-        mAlbums.add(new Album("Abba","Sample0", R.drawable.sample_1));
-        mAlbums.add(new Album("Belga","Sample2", R.drawable.sample_2));
-        mAlbums.add(new Album("Belga","Sample1", R.drawable.sample_3));
-        mAlbums.add(new Album("Korn","Sample1", R.drawable.sample_4));
-        mAlbums.add(new Album("Korn","Sample2", R.drawable.sample_5));
-        mAlbums.add(new Album("Belga","Sample1", R.drawable.sample_6));
-        mAlbums.add(new Album("Abba","Sample0", R.drawable.sample_7));
-
+        if(mAlbums.size() > 0) return;
+        Album album;
+        album = new Album("Abba","Sample0", R.drawable.sample_0);
+        album.add(new Track("Mammamia"));
+        album.add(new Track("Gizi"));
+        album.add(new Track("Mammamia"));
+        mAlbums.add(album);
+        album = new Album("Abba","Sample0", R.drawable.sample_1);
+        album.add(new Track("VASDDSA"));
+        album.add(new Track("rstghrtgr"));
+        mAlbums.add(album);
+        album = new Album("Belga","Sample2", R.drawable.sample_2);
+        album.add(new Track("VASDDSA"));
+        album.add(new Track("rstghrtgr"));
+        album.add(new Track("rstghrtgr"));
+        album.add(new Track("rstghrtgr"));
+        album.add(new Track("rstghrtgr"));
+        mAlbums.add(album);
+        album = new Album("Belga","Sample1", R.drawable.sample_3);
+        album.add(new Track("VASDDSA"));
+        album.add(new Track("rstghrtgr"));
+        mAlbums.add(album);
+        album = new Album("Korn","Sample1", R.drawable.sample_4);
+        album.add(new Track("VASDDSA"));
+        album.add(new Track("rstghrtgr"));
+        mAlbums.add(album);
     }
 }
