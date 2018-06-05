@@ -23,9 +23,9 @@ public class Artist {
     }
 
 
-    private static Artist getArtistByName(String artistName) {
+    public static Artist getArtistByName(String artistName) {
         for (int i = 0; i < mArtists.size(); i++) {
-            if (mArtists.get(i).getArtistName() == artistName) {
+            if (mArtists.get(i).getArtistName().equals(artistName)) {
                 return mArtists.get(i);
             }
         }
@@ -34,7 +34,7 @@ public class Artist {
 
     private static boolean hasArtist(String artistName) {
         for (int i = 0; i < mArtists.size(); i++) {
-            if (mArtists.get(i).getArtistName() == artistName) {
+            if (mArtists.get(i).getArtistName().equals(artistName)) {
                 return true;
             }
         }
@@ -63,5 +63,13 @@ public class Artist {
             totalTrackCount = totalTrackCount + mAlbums.get(i).getTrackCount();
         }
         return totalTrackCount;
+    }
+
+    public ArrayList<Track> getTracks(){
+        ArrayList<Track> tracks = new ArrayList<>();
+        for (int i = 0; i < mAlbums.size(); i++) {
+            tracks.addAll(mAlbums.get(i));
+        }
+        return tracks;
     }
 }

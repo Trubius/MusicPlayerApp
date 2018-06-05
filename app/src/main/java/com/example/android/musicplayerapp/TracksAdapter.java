@@ -9,10 +9,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class TracksAdapter extends DataAdapter {
-    protected final ArrayList<Track> mTracks = new ArrayList<>();
+    protected ArrayList<Track> mTracks;
 
     public TracksAdapter(Context context) {
         super(context);
+        mTracks = new ArrayList<>();
         for (int i = 0; i < mAlbums.size(); i++) {
             mTracks.addAll(mAlbums.get(i));
         }
@@ -20,7 +21,12 @@ public class TracksAdapter extends DataAdapter {
 
     public TracksAdapter(Context context, Album album){
         super(context);
-        mTracks.addAll(album);
+        mTracks = album;
+    }
+
+    public TracksAdapter(Context context, Artist artist){
+        super(context);
+        mTracks = artist.getTracks();
     }
 
     public int getCount() {
