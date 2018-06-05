@@ -6,10 +6,6 @@ public class Track {
     private Album mAlbum;
     private int mAudioResourceId;
 
-    public Track(String songName){
-        mSongName = songName;
-    }
-
     public Track (String songName, int audioResourceId){
         mSongName = songName;
         mAudioResourceId = audioResourceId;

@@ -7,7 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class AlbumActivity extends AppCompatActivity {
+public class AlbumActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

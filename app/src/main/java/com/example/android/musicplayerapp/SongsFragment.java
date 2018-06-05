@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class SongsFragment extends Fragment {
 
@@ -18,13 +17,14 @@ public class SongsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.track_list, container, false);
 
-        TracksAdapter adapter = new TracksAdapter(getActivity());
+        final TracksAdapter adapter = new TracksAdapter(getActivity());
         ListView listView = (ListView) rootView.findViewById(R.id.track_list_view);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+                BaseActivity activity = (BaseActivity) getActivity();
+                activity.playTrack(adapter.getItem(position));
             }
         });
 
