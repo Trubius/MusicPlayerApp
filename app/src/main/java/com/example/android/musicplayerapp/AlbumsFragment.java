@@ -17,7 +17,7 @@ public class AlbumsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.grid_album, container, false);
+        View rootView = inflater.inflate(R.layout.album_grid, container, false);
 
         AlbumAdapter adapter = new AlbumAdapter(getActivity());
         GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
