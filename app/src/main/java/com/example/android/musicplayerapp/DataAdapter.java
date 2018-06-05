@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 public abstract class DataAdapter extends BaseAdapter {
     protected final LayoutInflater mInflater;
-    protected final ArrayList<Album> mAlbums = new ArrayList<Album>();
+    protected final ArrayList<Album> mAlbums = new ArrayList<>();
+    protected final ArrayList<Artist> mArtists = Artist.getArtists();
 
     DataAdapter(Context context){
         mInflater = LayoutInflater.from(context);
