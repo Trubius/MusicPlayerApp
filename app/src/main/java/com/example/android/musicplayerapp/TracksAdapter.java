@@ -18,6 +18,11 @@ public class TracksAdapter extends DataAdapter {
         }
     }
 
+    public TracksAdapter(Context context, Album album){
+        super(context);
+        mTracks.addAll(album);
+    }
+
     public int getCount() {
         return mTracks.size();
     }

@@ -1,5 +1,6 @@
 package com.example.android.musicplayerapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,13 +20,15 @@ public class AlbumsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.album_grid, container, false);
 
-        AlbumAdapter adapter = new AlbumAdapter(getActivity());
+        final AlbumAdapter adapter = new AlbumAdapter(getActivity());
         GridView gridview = (GridView) rootView.findViewById(R.id.gridview);
         gridview.setAdapter(adapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), AlbumActivity.class);
+                intent.putExtra("AlbumKey", adapter.getItem(position).getKey());
+                getActivity().startActivity(intent);
             }
         });
 
