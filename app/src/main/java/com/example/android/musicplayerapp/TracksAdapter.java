@@ -37,8 +37,19 @@ public class TracksAdapter extends DataAdapter {
         return mTracks.get(position);
     }
 
+    public Track getNextTrack(Track currentTrack) {
+        int nextIndex = mTracks.indexOf(currentTrack) + 1;
+        return mTracks.get(nextIndex % mTracks.size());
+    }
+
+    public Track getPrevTrack(Track currentTrack) {
+        int nextIndex = mTracks.indexOf(currentTrack) - 1;
+        return mTracks.get(mTracks.size() + nextIndex % mTracks.size());
+    }
+
     public long getItemId(int position) {
         return position;
+        //return mTracks.get(position).getAudioResourceId();
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {

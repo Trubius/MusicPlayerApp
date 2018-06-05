@@ -4,10 +4,15 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageView;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    private static TracksAdapter tracksAdapter;
+    private static Track currentTrack;
+    private ImageView playButton;
 
     /** Handles playback of all the sound files */
     private MediaPlayer mMediaPlayer;
@@ -16,14 +21,62 @@ public abstract class BaseActivity extends AppCompatActivity {
     private AudioManager mAudioManager;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Create and setup the {@link AudioManager} to request audio focus
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     }
 
-    public void playTrack(Track track) {
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        setPlayPauseImageResource();
+    }
+
+    public void initBottomNav(){
+        ImageView nextButton = (ImageView) findViewById(R.id.skip_next);
+        ImageView prevButton = (ImageView) findViewById(R.id.skip_previous);
+        playButton = (ImageView) findViewById(R.id.play);
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mMediaPlayer != null) nextTrack();
+            }
+        });
+
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mMediaPlayer != null) prevTrack();
+            }
+        });
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mMediaPlayer == null) return;
+                
+                if (mMediaPlayer.isPlaying()) {   // Checks music if it's playing
+                    mMediaPlayer.pause();
+                } else {
+                    mMediaPlayer.start();
+                }
+                setPlayPauseImageResource();
+            }
+        });
+    }
+
+    private void setPlayPauseImageResource() {
+        if (mMediaPlayer.isPlaying()) {   // Checks music if it's playing
+            playButton.setImageResource(R.drawable.ic_pause);
+        } else {
+            playButton.setImageResource(R.drawable.ic_play);
+        }
+    }
+
+    public void playTrack(Track track, TracksAdapter adapter) {
         // Release the media player if it currently exists because we are about to
         // play a different sound file
         releaseMediaPlayer();
@@ -45,9 +98,24 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             // Start the audio file
             mMediaPlayer.start();
-
             mMediaPlayer.setOnCompletionListener(mCompletionListener);
+            tracksAdapter = adapter;
+            currentTrack = track;
+            setPlayPauseImageResource();
         }
+    }
+
+    public void nextTrack(){
+        releaseMediaPlayer();
+        Track nextTrack = tracksAdapter.getNextTrack(currentTrack);
+        playTrack(nextTrack, tracksAdapter);
+
+    }
+
+    public void prevTrack(){
+        releaseMediaPlayer();
+        Track prevTrack = tracksAdapter.getPrevTrack(currentTrack);
+        playTrack(prevTrack, tracksAdapter);
     }
     /**
      * This listener gets triggered when the {@link MediaPlayer} has completed
@@ -107,4 +175,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
         }
     }
+
+
 }

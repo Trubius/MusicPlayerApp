@@ -24,7 +24,7 @@ public class SongsFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 BaseActivity activity = (BaseActivity) getActivity();
-                activity.playTrack(adapter.getItem(position));
+                activity.playTrack(adapter.getItem(position), adapter);
             }
         });
 
