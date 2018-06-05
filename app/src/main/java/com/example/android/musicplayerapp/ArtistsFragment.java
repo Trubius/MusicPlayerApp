@@ -19,7 +19,7 @@ public class ArtistsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.artist_list, container, false);
 
         ArtistsAdapter adapter = new ArtistsAdapter(getActivity());
-        ListView listView = (ListView) rootView.findViewById(R.id.list);
+        ListView listView = (ListView) rootView.findViewById(R.id.artist_list_view);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

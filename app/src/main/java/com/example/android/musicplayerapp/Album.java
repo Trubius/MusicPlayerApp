@@ -30,4 +30,9 @@ public class Album extends ArrayList<Track> {
     public int getTrackCount(){
         return size();
     }
+
+    public void addTrack(Track track){
+        add(track);
+        track.setAlbum(this);
+    }
 }
