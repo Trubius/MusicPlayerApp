@@ -10,20 +10,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class AlbumAdapter extends BaseAdapter {
-    private final LayoutInflater mInflater;
-    private final ArrayList<Album> mAlbums= new ArrayList<Album>();
+public class AlbumAdapter extends DataAdapter {
 
     public AlbumAdapter(Context context) {
-        mInflater = LayoutInflater.from(context);
-        mAlbums.add(new Album("Sample0", R.drawable.sample_0));
-        mAlbums.add(new Album("Sample1", R.drawable.sample_1));
-        mAlbums.add(new Album("Sample2", R.drawable.sample_2));
-        mAlbums.add(new Album("Sample3", R.drawable.sample_3));
-        mAlbums.add(new Album("Sample4", R.drawable.sample_4));
-        mAlbums.add(new Album("Sample5", R.drawable.sample_5));
-        mAlbums.add(new Album("Sample6", R.drawable.sample_6));
-        mAlbums.add(new Album("Sample7", R.drawable.sample_7));
+        super(context);
     }
 
     public int getCount() {
@@ -40,23 +30,25 @@ public class AlbumAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        ImageView imageView;
-        TextView textView;
-
-        if (view == null) {
-            view = mInflater.inflate(R.layout.list_album, parent,false);
-            view.setTag(R.id.image, view.findViewById(R.id.image));
-            view.setTag(R.id.album_name, view.findViewById(R.id.album_name));
-        }
-
-        imageView = (ImageView) view.getTag(R.id.image);
-        textView = (TextView) view.getTag(R.id.album_name);
-
+        ImageView albumImageView;
+        TextView albumTextView;
+        TextView artistTextView;
         Album album = getItem(position);
 
-        imageView.setImageResource(album.getAlbumCoverId());
-        textView.setText(album.getAlbumName());
+        if (view == null) {
+            view = mInflater.inflate(R.layout.album_item, parent,false);
+            view.setTag(R.id.image, view.findViewById(R.id.image));
+            view.setTag(R.id.album_name, view.findViewById(R.id.album_name));
+            view.setTag(R.id.artist_name, view.findViewById(R.id.artist_name));
+        }
+
+        albumImageView = (ImageView) view.getTag(R.id.image);
+        albumTextView = (TextView) view.getTag(R.id.album_name);
+        artistTextView = (TextView) view.getTag(R.id.artist_name);
+
+        albumImageView.setImageResource(album.getAlbumCoverId());
+        albumTextView.setText(album.getAlbumName());
+        artistTextView.setText(album.getArtistName());
         return view;
     }
-
 }
