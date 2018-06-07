@@ -43,8 +43,8 @@ public class TracksAdapter extends DataAdapter {
     }
 
     public Track getPrevTrack(Track currentTrack) {
-        int nextIndex = mTracks.indexOf(currentTrack) - 1;
-        return mTracks.get(mTracks.size() + nextIndex % mTracks.size());
+        int nextIndex = mTracks.size() + mTracks.indexOf(currentTrack) - 1;
+        return mTracks.get(nextIndex % mTracks.size());
     }
 
     public long getItemId(int position) {

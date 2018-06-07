@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
     private static TracksAdapter tracksAdapter;
     private static Track currentTrack;
     private ImageView playButton;
+    private TextView currentPlay;
 
     /** Handles playback of all the sound files */
     private MediaPlayer mMediaPlayer;
@@ -176,5 +178,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // When the app is stopped, release the media player resources because we won't
+        // be playing any more sounds.
+        releaseMediaPlayer();
+    }
 }
