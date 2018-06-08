@@ -2,6 +2,11 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <SeekBar android:id="@+id/seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        app:layout_constraintBottom_toTopOf="@id/current_playing"/>
+
     <TextView
         android:id="@+id/current_playing"
         android:layout_width="match_parent"

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -15,6 +17,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static Track currentTrack;
     private ImageView playButton;
     private TextView currentTrackText;
+    private SeekBar seekBar;
+    private static Handler mHandler = new Handler();
+    private static Runnable polling;
 
     /** Handles playback of all the sound files */
     private static MediaPlayer mMediaPlayer;
@@ -29,6 +34,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         // Create and setup the {@link AudioManager} to request audio focus
         if (mAudioManager == null) {
             mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        }
+
+        if (polling == null) {
+            polling = new Runnable() {
+
+                @Override
+                public void run() {
+                    if (mMediaPlayer != null) {
+                        int mCurrentPosition = mMediaPlayer.getCurrentPosition();
+                        seekBar.setProgress(mCurrentPosition);
+                    }
+                    mHandler.postDelayed(this, 1000);
+                }
+            };
         }
     }
 
@@ -49,6 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         ImageView prevButton = (ImageView) findViewById(R.id.skip_previous);
         playButton = (ImageView) findViewById(R.id.play);
         currentTrackText = (TextView) findViewById(R.id.current_playing);
+        seekBar = (SeekBar) findViewById(R.id.seekbar);
 
         setPlayPauseImageResource();
         if (currentTrack != null) {
@@ -118,6 +138,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             currentTrack = track;
             setPlayPauseImageResource();
             currentTrackText.setText(track.toString());
+            seekBar.setMax(mMediaPlayer.getDuration());
+            seekBar.setProgress(mMediaPlayer.getCurrentPosition());
+
+            runOnUiThread(polling);
         }
     }
 
