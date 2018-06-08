@@ -71,9 +71,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         seekBar = (SeekBar) findViewById(R.id.seekbar);
 
         setPlayPauseImageResource();
-        if (currentTrack != null) {
-            currentTrackText.setText(currentTrack.toString());
-        }
+        initSeekBar();
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,11 +135,39 @@ public abstract class BaseActivity extends AppCompatActivity {
             tracksAdapter = adapter;
             currentTrack = track;
             setPlayPauseImageResource();
-            currentTrackText.setText(track.toString());
-            seekBar.setMax(mMediaPlayer.getDuration());
-            seekBar.setProgress(mMediaPlayer.getCurrentPosition());
+            initSeekBar();
 
             runOnUiThread(polling);
+        }
+    }
+
+    private void initSeekBar() {
+        if (currentTrack != null) {
+            currentTrackText.setText(currentTrack.toString());
+            seekBar.setMax(mMediaPlayer.getDuration());
+            seekBar.setProgress(mMediaPlayer.getCurrentPosition());
+            seekBar.setEnabled(true);
+
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    if (fromUser) {
+                        mMediaPlayer.seekTo(progress);
+                    }
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+        } else {
+            seekBar.setEnabled(false);
         }
     }
 
