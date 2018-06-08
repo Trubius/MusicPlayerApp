@@ -15,7 +15,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static Track currentTrack;
     private ImageView playButton;
     private TextView currentPlay;
-    private static int currentAudioFocus;
 
     /** Handles playback of all the sound files */
     private static MediaPlayer mMediaPlayer;
@@ -122,17 +121,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private static void resumeTrack() {
-        if (currentAudioFocus == AudioManager.AUDIOFOCUS_GAIN) {
+        int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
+                AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED){
             mMediaPlayer.start();
-        } else {
-            int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
-                    // Use the music stream.
-                    AudioManager.STREAM_MUSIC,
-                    // Request permanent focus.
-                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-            if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED){
-                mMediaPlayer.start();
-            }
         }
     }
 
@@ -164,7 +157,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
         public void onAudioFocusChange(int focusChange) {
-            currentAudioFocus = focusChange;
             switch (focusChange){
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
