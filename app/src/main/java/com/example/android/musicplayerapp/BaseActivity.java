@@ -14,7 +14,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static TracksAdapter tracksAdapter;
     private static Track currentTrack;
     private ImageView playButton;
-    private TextView currentPlay;
+    private TextView currentTrackText;
 
     /** Handles playback of all the sound files */
     private static MediaPlayer mMediaPlayer;
@@ -48,8 +48,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         ImageView nextButton = (ImageView) findViewById(R.id.skip_next);
         ImageView prevButton = (ImageView) findViewById(R.id.skip_previous);
         playButton = (ImageView) findViewById(R.id.play);
+        currentTrackText = (TextView) findViewById(R.id.current_playing);
 
         setPlayPauseImageResource();
+        if (currentTrack != null) {
+            currentTrackText.setText(currentTrack.toString());
+        }
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +117,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             tracksAdapter = adapter;
             currentTrack = track;
             setPlayPauseImageResource();
+            currentTrackText.setText(track.toString());
         }
     }
 

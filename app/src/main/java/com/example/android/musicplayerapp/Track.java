@@ -30,4 +30,9 @@ public class Track {
     public String getArtistName(){
         return mAlbum.getArtistName();
     }
+
+    @Override
+    public String toString() {
+        return getSongName() + "\n" + getArtistName();
+    }
 }
