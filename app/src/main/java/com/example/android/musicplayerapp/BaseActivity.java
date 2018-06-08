@@ -15,19 +15,22 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static Track currentTrack;
     private ImageView playButton;
     private TextView currentPlay;
+    private static int currentAudioFocus;
 
     /** Handles playback of all the sound files */
-    private MediaPlayer mMediaPlayer;
+    private static MediaPlayer mMediaPlayer;
 
     /** Handles audio focus when playing a sound file */
-    private AudioManager mAudioManager;
+    private static AudioManager mAudioManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Create and setup the {@link AudioManager} to request audio focus
-        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (mAudioManager == null) {
+            mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        }
     }
 
     @Override
@@ -40,6 +43,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         ImageView nextButton = (ImageView) findViewById(R.id.skip_next);
         ImageView prevButton = (ImageView) findViewById(R.id.skip_previous);
         playButton = (ImageView) findViewById(R.id.play);
+
+        setPlayPauseImageResource();
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,11 +64,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (mMediaPlayer == null) return;
-                
                 if (mMediaPlayer.isPlaying()) {   // Checks music if it's playing
-                    mMediaPlayer.pause();
+                    pauseTrack();
                 } else {
-                    mMediaPlayer.start();
+                    resumeTrack();
                 }
                 setPlayPauseImageResource();
             }
@@ -71,7 +75,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void setPlayPauseImageResource() {
-        if (mMediaPlayer.isPlaying()) {   // Checks music if it's playing
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {   // Checks music if it's playing
             playButton.setImageResource(R.drawable.ic_pause);
         } else {
             playButton.setImageResource(R.drawable.ic_play);
@@ -107,15 +111,31 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    private static void pauseTrack() {
+        mMediaPlayer.pause();
+    }
+
+    private static void resumeTrack() {
+        if (currentAudioFocus == AudioManager.AUDIOFOCUS_GAIN) {
+            mMediaPlayer.start();
+        } else {
+            int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
+                    // Use the music stream.
+                    AudioManager.STREAM_MUSIC,
+                    // Request permanent focus.
+                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+            if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED){
+                mMediaPlayer.start();
+            }
+        }
+    }
+
     public void nextTrack(){
-        releaseMediaPlayer();
         Track nextTrack = tracksAdapter.getNextTrack(currentTrack);
         playTrack(nextTrack, tracksAdapter);
-
     }
 
     public void prevTrack(){
-        releaseMediaPlayer();
         Track prevTrack = tracksAdapter.getPrevTrack(currentTrack);
         playTrack(prevTrack, tracksAdapter);
     }
@@ -126,8 +146,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(MediaPlayer mediaPlayer) {
-            // Now that the sound file has finished playing, release the media player resources.
-            releaseMediaPlayer();
+            // Now that the sound file has finished playing, play next track.
+            nextTrack();
         }
     };
 
@@ -135,34 +155,28 @@ public abstract class BaseActivity extends AppCompatActivity {
      * This listener gets triggered whenever the audio focus changes
      * (i.e., we gain or lose audio focus because of another app or device).
      */
-    private AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+    private static AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
         public void onAudioFocusChange(int focusChange) {
-            if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT ||
-                    focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
-                // The AUDIOFOCUS_LOSS_TRANSIENT case means that we've lost audio focus for a
-                // short amount of time. The AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK case means that
-                // our app is allowed to continue playing sound but at a lower volume. We'll treat
-                // both cases the same way because our app is playing short sound files.
-
-                // Pause playback and reset player to the start of the file. That way, we can
-                // play the word from the beginning when we resume playback.
-                mMediaPlayer.pause();
-                mMediaPlayer.seekTo(0);
-            } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-                // The AUDIOFOCUS_GAIN case means we have regained focus and can resume playback.
-                mMediaPlayer.start();
-            } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-                // The AUDIOFOCUS_LOSS case means we've lost audio focus and
-                // Stop playback and clean up resources
-                releaseMediaPlayer();
+            currentAudioFocus = focusChange;
+            switch (focusChange){
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                    pauseTrack();
+                    break;
+                case AudioManager.AUDIOFOCUS_GAIN:
+                    mMediaPlayer.start();
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS:
+                    releaseMediaPlayer();
+                    break;
             }
         }
     };
     /**
      * Clean up the media player by releasing its resources.
      */
-    private void releaseMediaPlayer() {
+    private static void releaseMediaPlayer() {
         // If the media player is not null, then it may be currently playing a sound.
         if (mMediaPlayer != null) {
             // Regardless of the current state of the media player, release its resources
@@ -173,16 +187,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             // setting the media player to null is an easy way to tell that the media player
             // is not configured to play an audio file at the moment.
             mMediaPlayer = null;
-            // Abandon audio focus when playback complete
-            mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // When the app is stopped, release the media player resources because we won't
-        // be playing any more sounds.
-        releaseMediaPlayer();
+    private static void releaseAudioFocus() {
+        mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
     }
 }
