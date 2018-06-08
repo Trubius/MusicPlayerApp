@@ -16,13 +16,13 @@ public class AlbumActivity extends BaseActivity {
 
         final String albumKey = getIntent().getStringExtra("AlbumKey");
         Album mAlbum = Album.getAlbumByKey(albumKey);
-        TracksAdapter adapter = new TracksAdapter(this, mAlbum);
+        final TracksAdapter adapter = new TracksAdapter(this, mAlbum);
         ListView listView = (ListView) findViewById(R.id.current_album_track_list);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(getApplicationContext(), "" + position, Toast.LENGTH_SHORT).show();
+                playTrack(adapter.getItem(position), adapter);
             }
         });
     }
