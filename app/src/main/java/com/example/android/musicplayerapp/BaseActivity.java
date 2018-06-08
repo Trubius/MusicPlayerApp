@@ -34,9 +34,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        initBottomNav();
+    }
+
+    @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        setPlayPauseImageResource();
+        initBottomNav();
     }
 
     public void initBottomNav(){
