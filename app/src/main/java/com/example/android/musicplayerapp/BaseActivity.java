@@ -83,7 +83,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         prevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mMediaPlayer != null) prevTrack();
+                if (mMediaPlayer != null) {
+                    if (mMediaPlayer.getCurrentPosition() >= 3000){
+                        mMediaPlayer.seekTo(0);
+                    } else {
+                        prevTrack();
+                    }
+                }
             }
         });
 
