@@ -17,9 +17,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static Track currentTrack;
     private ImageView playButton;
     private TextView currentTrackText;
+    private TextView durationText;
+    private TextView currentTimeText;
     private SeekBar seekBar;
     private static Handler mHandler = new Handler();
-    private static Runnable polling;
+    private Runnable polling;
 
     /** Handles playback of all the sound files */
     private static MediaPlayer mMediaPlayer;
@@ -36,18 +38,25 @@ public abstract class BaseActivity extends AppCompatActivity {
             mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         }
 
-        if (polling == null) {
-            polling = new Runnable() {
+        polling = new Runnable() {
 
-                @Override
-                public void run() {
-                    if (mMediaPlayer != null) {
-                        int mCurrentPosition = mMediaPlayer.getCurrentPosition();
-                        seekBar.setProgress(mCurrentPosition);
-                    }
-                    mHandler.postDelayed(this, 1000);
-                }
-            };
+            @Override
+            public void run() {
+                updateDurationUI();
+                mHandler.postDelayed(this, 1000);
+            }
+        };
+    }
+
+    private void updateDurationUI() {
+        if (mMediaPlayer != null) {
+            int mCurrentPosition = mMediaPlayer.getCurrentPosition();
+            seekBar.setProgress(mCurrentPosition);
+            currentTimeText.setText(formatDuration(mCurrentPosition));
+            durationText.setText(formatDuration(mMediaPlayer.getDuration()));
+        } else {
+            currentTimeText.setText(formatDuration(0));
+            durationText.setText(formatDuration(0));
         }
     }
 
@@ -69,9 +78,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         playButton = (ImageView) findViewById(R.id.play);
         currentTrackText = (TextView) findViewById(R.id.current_playing);
         seekBar = (SeekBar) findViewById(R.id.seekbar);
+        durationText = (TextView) findViewById(R.id.track_duration);
+        currentTimeText = (TextView) findViewById(R.id.current_time);
 
         setPlayPauseImageResource();
         initSeekBar();
+        runOnUiThread(polling);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +143,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             // Start playback
 
             // Create and setup the {@link MediaPlayer} for the audio resource associated
-            // with the current word
+            // with the current track
 
             mMediaPlayer = MediaPlayer.create(getApplicationContext(), track.getAudioResourceId());
 
@@ -142,9 +154,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             currentTrack = track;
             setPlayPauseImageResource();
             initSeekBar();
-
-            runOnUiThread(polling);
         }
+    }
+
+    private static String formatDuration(int milliseconds){
+        int seconds = milliseconds / 1000;
+        return String.format("%02d", seconds / 60) + ":" + String.format("%02d", seconds % 60);
     }
 
     private void initSeekBar() {
