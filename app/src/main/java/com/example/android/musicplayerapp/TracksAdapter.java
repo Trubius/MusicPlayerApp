@@ -76,7 +76,12 @@ public class TracksAdapter extends DataAdapter {
         albumCover.setImageResource(track.getImageResourceId());
         trackNameTextView.setText(track.getSongName());
         artistNameTextView.setText(track.getArtistName());
-        trackLengthTextView.setText("Track length");
+        trackLengthTextView.setText(formatDuration(Integer.parseInt(track.getDuration())));
         return view;
+    }
+
+    private static String formatDuration(int milliseconds){
+        int seconds = milliseconds / 1000;
+        return String.format("%02d", seconds / 60) + ":" + String.format("%02d", seconds % 60);
     }
 }
