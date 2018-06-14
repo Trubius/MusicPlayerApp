@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">MusicPlayerApp</string>
-    <string name="play">play</string>
-    <string name="skip_next">skip_next</string>
-    <string name="skip_previous">skip_previous</string>
+    <string name="play">Play</string>
+    <string name="skip_next">Skip next</string>
+    <string name="skip_previous">Skip previous</string>
     <string name="group_albums">Albums</string>
     <string name="group_songs">Songs</string>
     <string name="group_artists">Artists</string>
+    <string name="track_name">Track name</string>
+    <string name="artist_name">Artist name</string>
+    <string name="track_length">Track length</string>
+    <string name="play_track">Play track</string>
 </resources>
