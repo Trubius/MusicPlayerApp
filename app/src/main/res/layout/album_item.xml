@@ -16,27 +16,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#55000000"
-        android:paddingEnd="@dimen/album_text_padding"
-        android:paddingStart="@dimen/album_text_padding"
-        android:paddingTop="@dimen/album_text_padding"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/album_text_size"
-        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/artist_name"
         app:layout_constraintEnd_toEndOf="@id/image"
-        app:layout_constraintStart_toStartOf="@id/image" />
+        app:layout_constraintStart_toStartOf="@id/image"
+        style="@style/textStyleAlbumMedium" />
 
     <TextView
         android:id="@+id/artist_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#55000000"
-        android:paddingBottom="@dimen/album_text_padding"
-        android:paddingEnd="@dimen/album_text_padding"
-        android:paddingStart="@dimen/album_text_padding"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/artist_text_size"
         app:layout_constraintBottom_toBottomOf="@id/image"
         app:layout_constraintEnd_toEndOf="@id/image"
-        app:layout_constraintStart_toStartOf="@id/image" />
+        app:layout_constraintStart_toStartOf="@id/image"
+        style="@style/textStyleAlbumSmall" />
 </android.support.constraint.ConstraintLayout>
