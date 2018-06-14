@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.musicplayerapp.ArtistActivity">
 
+    <TextView
+        android:id="@+id/current_artist_name"
+        style="@style/textStyleMedium"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_size"
+        android:layout_margin="0dp"
+        android:gravity="center"
+        android:text="@string/artist_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ListView
         android:id="@+id/current_artist_list"
         android:layout_width="match_parent"
@@ -15,7 +27,7 @@
         app:layout_constraintBottom_toTopOf="@id/artist_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/current_artist_name" />
 
 
     <com.example.android.musicplayerapp.BottomNav

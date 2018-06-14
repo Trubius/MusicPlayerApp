@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ArtistActivity extends BaseActivity {
@@ -19,6 +20,8 @@ public class ArtistActivity extends BaseActivity {
         final TracksAdapter adapter = new TracksAdapter(this, mArtist);
         ListView listView = (ListView) findViewById(R.id.current_artist_list);
         listView.setAdapter(adapter);
+        TextView textView = (TextView) findViewById(R.id.current_artist_name);
+        textView.setText(mArtist.getArtistName());
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
