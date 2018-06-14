@@ -6,41 +6,35 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.musicplayerapp.AlbumActivity">
 
-    <ImageView
-        android:id="@+id/current_album_image"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/current_album_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Current album name"
-        app:layout_constraintStart_toEndOf="@id/current_album_image"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:text="@string/album_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/textStyleMedium"/>
 
     <TextView
         android:id="@+id/current_album_artist_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Current artist"
+        android:text="@string/artist_name"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/current_album_name"
-        app:layout_constraintStart_toEndOf="@id/current_album_image"/>
+        app:layout_constraintBottom_toTopOf="@id/current_album_track_list"
+        style="@style/textStyleSmall"/>
 
     <ListView
         android:id="@+id/current_album_track_list"
-        android:layout_width="368dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:drawSelectorOnTop="true"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/album_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/current_album_image" />
+        app:layout_constraintTop_toBottomOf="@id/current_album_artist_name" />
 
     <com.example.android.musicplayerapp.BottomNav
         android:id="@+id/album_bottom"

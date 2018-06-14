@@ -8,6 +8,7 @@
     <string name="group_artists">Artists</string>
     <string name="track_name">Track name</string>
     <string name="artist_name">Artist name</string>
+    <string name="album_name">Album name</string>
     <string name="track_length">Track length</string>
     <string name="play_track">Play track</string>
     <string name="album_s">Album(s)</string>
