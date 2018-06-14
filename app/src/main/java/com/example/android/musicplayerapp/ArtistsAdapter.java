@@ -6,9 +6,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class ArtistsAdapter extends DataAdapter {
+    Context mContext;
 
     public ArtistsAdapter(Context context) {
         super(context);
+        mContext = context;
     }
 
     public int getCount() {
@@ -42,8 +44,13 @@ public class ArtistsAdapter extends DataAdapter {
         trackCountTextView = (TextView) view.getTag(R.id.artist_track_count);
 
         artistTextView.setText(artist.getArtistName());
-        albumCountTextView.setText("" + artist.getAlbumCount());
-        trackCountTextView.setText("" + artist.getTrackCount());
+        albumCountTextView.setText(quantityString(R.plurals.numberOfAlbums, artist.getAlbumCount(), artist.getAlbumCount()));
+        trackCountTextView.setText(quantityString(R.plurals.numberOfSongs, artist.getTrackCount(), artist.getAlbumCount()));
         return view;
     }
+
+    private String quantityString(int id, int quantity, int count){
+        return mContext.getResources().getQuantityString(id, quantity, count);
+    }
+
 }

@@ -4,39 +4,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="@dimen/layout_list">
 
 
     <TextView
         android:id="@+id/artist_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Artist name"
+        android:text="@string/artist_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/textStyleMedium" />
 
     <TextView
         android:id="@+id/artist_album_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Album count"
+        android:text="@string/album_s"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/artist_item_name" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/textStyleSmall" />
+
+    <View
+        android:id="@+id/splitter_artist"
+        app:layout_constraintStart_toEndOf="@id/artist_album_count"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/splitterStyle" />
 
     <TextView
         android:id="@+id/artist_track_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="Track count"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.203"
-        app:layout_constraintStart_toEndOf="@+id/artist_album_count"
-        app:layout_constraintTop_toBottomOf="@+id/artist_album_count" />
+        android:text="@string/song_s"
+        app:layout_constraintStart_toEndOf="@id/splitter_artist"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/textStyleSmall" />
 
 </android.support.constraint.ConstraintLayout>

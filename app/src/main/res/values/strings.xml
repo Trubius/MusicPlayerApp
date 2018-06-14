@@ -10,4 +10,14 @@
     <string name="artist_name">Artist name</string>
     <string name="track_length">Track length</string>
     <string name="play_track">Play track</string>
+    <string name="album_s">Album(s)</string>
+    <string name="song_s">Song(s)</string>
+    <plurals name="numberOfAlbums">
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d albums</item>
+    </plurals>
+    <plurals name="numberOfSongs">
+        <item quantity="one">%d song</item>
+        <item quantity="other">%d songs</item>
+    </plurals>
 </resources>
