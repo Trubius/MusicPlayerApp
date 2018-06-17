@@ -1,6 +1,7 @@
 package com.example.android.musicplayerapp;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -164,6 +165,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void initSeekBar() {
         if (currentTrack != null) {
+            currentTrackText.setTypeface(null, Typeface.BOLD);
             currentTrackText.setText(currentTrack.toString());
             seekBar.setMax(mMediaPlayer.getDuration());
             seekBar.setProgress(mMediaPlayer.getCurrentPosition());
@@ -221,7 +223,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(MediaPlayer mediaPlayer) {
-            // Now that the sound file has finished playing, play next track.
             nextTrack();
         }
     };

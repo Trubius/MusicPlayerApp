@@ -5,9 +5,9 @@
 
     <TextView
         android:id="@+id/current_time"
-        android:layout_width="40dp"
-        android:layout_height="20dp"
-        android:gravity="center"
+        android:layout_width="@dimen/timer_width"
+        android:layout_height="@dimen/seekbar_height"
+        android:gravity="center_horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/current_playing"
         app:layout_constraintEnd_toStartOf="@id/seekbar"/>
@@ -15,16 +15,16 @@
     <SeekBar
         android:id="@+id/seekbar"
         android:layout_width="0dp"
-        android:layout_height="20dp"
+        android:layout_height="@dimen/seekbar_height"
         app:layout_constraintStart_toEndOf="@id/current_time"
         app:layout_constraintBottom_toTopOf="@id/current_playing"
         app:layout_constraintEnd_toStartOf="@id/track_duration"/>
 
     <TextView
         android:id="@+id/track_duration"
-        android:layout_width="40dp"
-        android:layout_height="20dp"
-        android:gravity="center"
+        android:layout_width="@dimen/timer_width"
+        android:layout_height="@dimen/seekbar_height"
+        android:gravity="center_horizontal"
         app:layout_constraintStart_toEndOf="@id/seekbar"
         app:layout_constraintBottom_toTopOf="@id/current_playing"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -32,7 +32,7 @@
     <TextView
         android:id="@+id/current_playing"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/button_size"
+        android:layout_height="@dimen/bottom_bar"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/play"
         app:layout_constraintEnd_toEndOf="parent"

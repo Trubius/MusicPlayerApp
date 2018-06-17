@@ -10,7 +10,7 @@
         android:id="@+id/current_artist_name"
         style="@style/textStyleMedium"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/button_size"
+        android:layout_height="@dimen/artist_bar"
         android:layout_margin="0dp"
         android:gravity="center"
         android:text="@string/artist_name"

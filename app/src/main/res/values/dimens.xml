@@ -10,4 +10,8 @@
     <dimen name="image_list_margin">8dp</dimen>
     <dimen name="layout_list">72dp</dimen>
     <dimen name="list_margin">16dp</dimen>
+    <dimen name="seekbar_height">24dp</dimen>
+    <dimen name="timer_width">48dp</dimen>
+    <dimen name="bottom_bar">48dp</dimen>
+    <dimen name="artist_bar">48dp</dimen>
 </resources>
