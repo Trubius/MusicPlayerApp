@@ -45,7 +45,7 @@ public class ArtistsAdapter extends DataAdapter {
 
         artistTextView.setText(artist.getArtistName());
         albumCountTextView.setText(quantityString(R.plurals.numberOfAlbums, artist.getAlbumCount(), artist.getAlbumCount()));
-        trackCountTextView.setText(quantityString(R.plurals.numberOfSongs, artist.getTrackCount(), artist.getAlbumCount()));
+        trackCountTextView.setText(quantityString(R.plurals.numberOfSongs, artist.getTrackCount(), artist.getTrackCount()));
         return view;
     }
 
