@@ -264,8 +264,4 @@ public abstract class BaseActivity extends AppCompatActivity {
             mMediaPlayer = null;
         }
     }
-
-    private static void releaseAudioFocus() {
-        mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
-    }
 }

@@ -49,7 +49,6 @@ public class TracksAdapter extends DataAdapter {
 
     public long getItemId(int position) {
         return position;
-        //return mTracks.get(position).getAudioResourceId();
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
